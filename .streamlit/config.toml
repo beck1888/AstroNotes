@@ -14,7 +14,7 @@ font = "sans serif"  # A serif font for a classic look
 hideTopBar = true
 
 [client]
-showErrorDetails = false # Change to false when deploying
+showErrorDetails = true # Change to true for DEV
 toolbarMode = "minimal"
 
 [browser]
