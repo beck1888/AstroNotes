@@ -1,0 +1,48 @@
+MIT-ish License
+
+Copyright (c) 2024 AstroNotes
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+1. The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+2. Content Generation Disclaimer:
+   This software may generate or process content using various APIs and services.
+   Users are responsible for verifying their rights to use, process, or store any
+   content generated through the software. The creators of this software make no
+   claims about the ownership or rights to content generated through third-party
+   services or APIs.
+
+3. Proprietary Content Notice:
+   Some features of this software may interact with proprietary services or generate
+   content based on proprietary models or data. Users must independently verify their
+   right to use such services and the resulting content in their intended context.
+
+4. API Usage:
+   Users are responsible for obtaining and maintaining valid API keys and adhering
+   to all terms of service for any third-party APIs used in conjunction with this
+   software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+No Support Obligation:
+The creators and contributors of this software have no obligation to provide
+maintenance, support, updates, enhancements, or modifications. Any support
+provided is voluntary and can be terminated at any time without notice.
+
+Use At Your Own Risk:
+By using this software, you acknowledge that you are doing so at your own risk.
+The creators and contributors shall not be responsible for any consequences
+resulting from the use of this software.

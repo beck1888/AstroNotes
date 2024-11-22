@@ -1,0 +1,39 @@
+{
+    "system_instructions": "You are rewrite the following notes using the following instructions exactly.",
+
+    "notes_type": {
+        "Bullet Points": "You are to rewrite the following notes using bullet points.",
+        "Paragraphs": "You are to rewrite the following notes as paragraphs.",
+        "Preserve Original Type": "You are to rewrite the following notes using the same type (i.e. bullet points, paragraphs, etc) as the original notes."
+    },
+
+    "notes_style": {
+        "Understandable": "You are to rewrite the following notes in a way that is easy to understand.",
+        "Formal": "You are to rewrite the following notes in a formal style."
+    },
+
+    "format_notes": {
+        "Markdown": "You are to rewrite the following notes using extensive markdown syntax to clarify and separate the notes.",
+        "Plain Text": "You are to rewrite the following notes without using markdown syntax. Use plain text only."
+    },
+
+    "use_emojis": {
+        "true": "You are to rewrite the following notes using emojis to clarify and separate the notes.",
+        "false": "You are to rewrite the following notes without using and emojis."
+    },
+
+    "fix_content": {
+        "true": "You are to rewrite the following notes to fix any factual errors in the content.",
+        "false": "You are to rewrite the following notes, but don't correct any factual errors in the content: just leave them be."
+    },
+
+    "add_examples": {
+        "true": "You are to rewrite the following notes to include examples.",
+        "false": "You are to rewrite the following notes without including examples."
+    },
+
+    "remove_duplicates": {
+        "true": "You are to rewrite the following notes to remove any duplicate information.",
+        "false": "You are to rewrite the following notes without removing any duplicate information."
+    }
+}

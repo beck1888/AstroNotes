@@ -1,0 +1,25 @@
+[server]
+headless = true
+enableStaticServing = false
+
+[theme]
+base = "light"
+primaryColor = "#0066CC"  # A modern, vibrant blue
+backgroundColor = "#EAF4FC"  # Light blue for a sleek background
+secondaryBackgroundColor = "#DCEAF5"  # Slightly darker blue for contrast
+textColor = "#1F3A57"  # Dark blue for sharp text
+font = "sans serif"  # A serif font for a classic look
+
+[ui]
+hideTopBar = true
+
+[client]
+showErrorDetails = false # Change to false when deploying
+toolbarMode = "minimal"
+
+[browser]
+gatherUsageStats = false
+
+[runner]
+magicEnabled = false
+fastReruns = true
