@@ -165,7 +165,7 @@ if "screen" not in st.session_state:
 if st.session_state.screen == "login":
     # Login form
     st.subheader("Sign In")
-    with st.form("login_form", True, enter_to_submit=True):
+    with st.form("login_form"):
         password = st.text_input("App Password", type="password")
         login_button = st.form_submit_button("Login", icon=":material/key:", use_container_width=True)
 
