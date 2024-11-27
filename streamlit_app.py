@@ -155,6 +155,7 @@ st.set_page_config(
 
 # Title
 st.title("🚀 AstroNotes")
+st.markdown("*Version 0.1*") # TODO: UPDATE THIS FOR EACH NEW RELEASE
 st.divider()
 
 # Session state initialization
