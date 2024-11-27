@@ -68,6 +68,12 @@ def generate_notes(model_inputs: dict) -> str:
     else:
         system_prompt += template["remove_duplicates"]["false"]
 
+    # Tell the model to give a summary (TL;DR) of the notes at the end
+    system_prompt += "After rewriting the notes, please add a horizontal line and provide a summary of the notes in a few sentences (like a TLDR)."
+
+    # Tell the model not to interject AI "thoughts" into the notes
+    system_prompt += "Please do not add any AI-generated thoughts or comments to the notes. Avoid sentences like: 'By looking at this process we can appreciate the complexity of the system.' or 'I hope this helps.' Give the notes, the summary, and that's it."
+
     # Fix the default spacing
     system_prompt = system_prompt.replace(".", ". ") # Add a space after periods
     system_prompt = system_prompt.replace(".  ", ". ") # Remove double spaces after periods
@@ -151,25 +157,76 @@ st.divider()
 
 # Session state initialization
 if "screen" not in st.session_state:
-    st.session_state.screen = "home"
+    st.session_state.screen = "login"
+
+# Main app: login screen
+if st.session_state.screen == "login":
+    # Login form
+    st.subheader("Sign In")
+    with st.form("login_form", True, enter_to_submit=True):
+        password = st.text_input("App Password", type="password")
+        login_button = st.form_submit_button("Login", icon=":material/key:", use_container_width=True)
+
+    # Login logic
+    if login_button:
+        # Make sure both fields are filled
+        if not password:
+            st.warning("Please enter your password, then try again.")
+            st.stop()
+
+        # Pull the username and password from the secrets file
+        app_password: dict = st.secrets["ACCOUNTS"]["app_password"]
+
+        # Check if the user has access the right password
+        if app_password == password:
+            st.session_state.screen = "input" # Skip the home screen and go straight to the input screen (for now)
+            st.success("Login successful!")
+            st.rerun() # Rerun the app to show the home screen
+        else:
+            st.error("Invalid password. Please try again.")
+            st.stop()
+
+    # # Provide a message to people without an account
+    # st.markdown("*At this time, we're not providing access to new users. Please check back later to create an account or contact the service owner.*")
 
 # Main app: home screen
-if st.session_state.screen == "home":
+elif st.session_state.screen == "home":
+    # Because the home screen is not yet implemented, we'll skip it for now
+    raise NotImplementedError("The home screen is not yet implemented. If you see this message, please contact the service owner.")
+
+
     # Home screen
     st.header("Welcome to AstroNotes!")
     st.write("""AstroNotes is your ultimate companion for converting chaotic class notes into sleek, organized masterpieces, complete with advanced formatting options!""")
 
     # Space down the go button to save space for a graphic later
-    for i in range(6):
+    for i in range(4):
         st.html("<br>")
 
-    go_button = st.button(
-        label="Get Started",
-        icon=":material/edit:",
-        use_container_width=True,
-        type="primary",
-        key="screen_home-go_button"
+    # Create a better layout for the go button
+    home_column1, home_column2, home_column3 = st.columns([2, 4, 2])
+
+    # Edit the button height for this screen
+    st.markdown(
+    """
+    <style>
+    .stButton button {
+        height: 80px;    # Adjust this value to change height
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
     )
+
+    # Go button
+    with home_column2:
+        go_button = st.button(
+            label="Get Started",
+            icon=":material/edit:",
+            use_container_width=True,
+            type="primary",
+            key="screen_home-go_button"
+        )
 
     if go_button:
         st.session_state.screen = "input"
@@ -188,7 +245,7 @@ elif st.session_state.screen == "input":
             label_visibility="collapsed",
             key="screen_input-text_input",
             height=932,
-            max_chars=5_000
+            max_chars=10_000
         )
 
     # Options
@@ -253,19 +310,21 @@ elif st.session_state.screen == "input":
 
         # Personalization
         st.divider()
-        st.markdown("*Personalization:*")
+        st.markdown("*Personalization:* **COMING SOON**")
         users_name = st.text_input(
             label="Your Name (Optional)",
             help="Enter your name to personalize your notes.",
             placeholder="Your Name",
-            key="screen_input-users_name"
+            key="screen_input-users_name",
+            disabled=True
         )
         date_taken = st.date_input(
             label="Date (Optional)",
             format="MM/DD/YYYY",
             value=None,
             help="Enter the date when the notes were taken.",
-            key="screen_input-date_taken"
+            key="screen_input-date_taken",
+            disabled=True
         )
 
     # Convert button
