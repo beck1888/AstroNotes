@@ -29,6 +29,8 @@
 - [ ] Give users an option to append a summary to revised notes
 - [ ] Let users toggle whether summaries are added after note revisions.
 - [ ] Provide default settings for this feature.
+- [ ] Print button
+- [ ] Easy "summarize more" button to start over
 
 ## Enhancements and User Engagement
 
