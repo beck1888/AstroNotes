@@ -115,3 +115,8 @@ poetry.lock
 .mypy_cache/
 .dmypy.json
 dmypy.json
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
