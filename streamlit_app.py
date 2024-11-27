@@ -142,7 +142,7 @@ def markdown_to_pdf(markdown_text, name="", date=""):
 st.set_page_config(
     page_title="AstroNotes",
     page_icon="static/images/favicon.png",
-    layout="centered"
+    layout="wide"
 )
 
 # Title
