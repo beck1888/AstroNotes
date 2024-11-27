@@ -7,15 +7,15 @@ import json
 # Streamlit and Streamlit components
 import streamlit as st
 from streamlit_lottie import st_lottie
-from streamlit_pdf_viewer import pdf_viewer as st_pdf
+# from streamlit_pdf_viewer import pdf_viewer as st_pdf
 
 # ReportLab for PDF generation
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import letter
+# from reportlab.pdfgen import canvas
+# from reportlab.lib.pagesizes import letter
 
 # Other third-party libraries
 import openai
-import markdown2
+# import markdown2
 
 ## Functions
 def generate_notes(model_inputs: dict) -> str:
@@ -92,6 +92,7 @@ def generate_notes(model_inputs: dict) -> str:
     return response.choices[0].message.content
 
 def markdown_to_pdf(markdown_text, name="", date=""):
+    raise NotImplementedError("The PDF generation feature is not yet implemented. If you see this message, please contact the service owner.")
     # Convert Markdown to HTML
     html_content = markdown2.markdown(markdown_text)
     
