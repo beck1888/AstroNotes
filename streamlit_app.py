@@ -3,6 +3,7 @@
 import os
 import uuid
 import json
+import subprocess
 
 # Streamlit and Streamlit components
 import streamlit as st
@@ -158,7 +159,7 @@ st.divider()
 
 # Session state initialization
 if "screen" not in st.session_state:
-    st.session_state.screen = "login"
+    st.session_state.screen = "login" # Set the initial screen
 
 # Main app: login screen
 if st.session_state.screen == "login":
@@ -170,25 +171,113 @@ if st.session_state.screen == "login":
 
     # Login logic
     if login_button:
-        # Make sure both fields are filled
-        if not password:
-            st.warning("Please enter your password, then try again.")
-            st.stop()
+        # # Make sure both fields are filled
+        # if not password:
+        #     st.warning("Please enter your password, then try again.")
+        #     st.stop()
 
         # Pull the username and password from the secrets file
         app_password: dict = st.secrets["ACCOUNTS"]["app_password"]
 
         # Check if the user has access the right password
         if app_password == password:
-            st.session_state.screen = "input" # Skip the home screen and go straight to the input screen (for now)
-            st.success("Login successful!")
+            st.session_state.screen = "run_automated_checks" # Run automated checks before showing the input screen
+            # st.success("Login successful!")
             st.rerun() # Rerun the app to show the home screen
         else:
-            st.error("Invalid password. Please try again.")
+            st.toast("Invalid password. Please try again.", icon=":material/error:") # Show a toast message instead of an error which will conflict with the next screen
             st.stop()
 
     # # Provide a message to people without an account
     # st.markdown("*At this time, we're not providing access to new users. Please check back later to create an account or contact the service owner.*")
+
+# Run automated checks
+elif st.session_state.screen == "run_automated_checks":
+
+    st.subheader("Verifying App Health")
+
+    passes = 0
+    fails = 0
+
+    with st.status("🧪 Running automated tests", expanded=False, state="running"):
+
+        # # A: Check if the secrets file has been set up
+        # st.write("🔍 Checking if the secrets file has been set up...")
+        # if os.path.exists("secrets.toml"):
+        #     passes += 1
+        #     st.write("          ↳ ✅ The secrets file has been set up.")
+        # else:
+        #     fails += 1
+        #     st.write("          ↳ ❌ The secrets file has not been set up.")
+
+        # B: Check if the OpenAI API key is set up
+        st.write("🔍 Checking if the OpenAI API key is set up...")
+        if "API_KEYS" in st.secrets and "OPENAI_API_KEY" in st.secrets["API_KEYS"] and st.secrets["API_KEYS"]["OPENAI_API_KEY"] != "": # This needs to be less convoluted
+            passes += 1
+            st.write("          ↳ ✅ The OpenAI API key has been set up.")
+        else:
+            fails += 1
+            st.write("          ↳ ❌ The OpenAI API key has not been set up.")
+
+        # C: Check if the app password is set up
+        st.write("🔍 Checking if the app password is set up...")
+        if "ACCOUNTS" in st.secrets and "app_password" in st.secrets["ACCOUNTS"] and st.secrets["ACCOUNTS"]["app_password"] != "": # Same deal here
+            passes += 1
+            st.write("          ↳ ✅ The app password has been set up.")
+        else:
+            fails += 1
+            st.write("          ↳ ❌ The app password has not been set up.")
+
+        # Check file integrity (making sure all files are present)
+        NEEDED_FILES = [
+            "static/prompt/build_prompt.json",
+            "static/lottie/rocket_loader.json",
+            "static/images/favicon.png",
+            '.streamlit/config.toml'
+        ]
+        st.write("🔍 Checking if all required files are present...")
+        for file in NEEDED_FILES:
+            if os.path.exists(file):
+                passes += 1
+                st.write(f"          ↳ ✅ {file} is present.")
+            else:
+                fails += 1
+                st.write(f"          ↳ ❌ {file} is missing.")
+        
+        # Make sure the project is running the latest version
+        st.write("🔍 Checking if the project is running the latest version...")
+        try:
+            result = subprocess.run(
+                ["git", "pull"],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            passes += 1
+            st.write(f"          ↳ ✅ The project is running the latest version:\n{result.stdout}")
+        except subprocess.CalledProcessError as e:
+            fails += 1
+            st.write(f"          ↳ ❌ Failed to update the project:\n{e.stderr}")
+        except Exception as e:
+            fails += 1
+            st.write(f"          ↳ ❌ An unexpected error occurred:\n{e}")
+
+        # Verify the results
+        st.write("📊 Almost ready to go. Verifying results...")
+        if fails == 0:
+            st.write("          ↳ ✅ All checks passed! The app is ready to go.")
+            cleared_to_proceed = True
+        else:
+            st.write(f"          ↳ ❌ {str(fails)} automated check(s) failed. Please address the issues above before proceeding.")
+            cleared_to_proceed = False
+
+    # Run the results
+    if cleared_to_proceed:
+        st.session_state.screen = "input" # Skip the home screen and go straight to the input screen (for now)
+        st.rerun()
+    else:
+        st.error("App not cleared to run. Please notify the developer.")
+        st.stop()
 
 # Main app: home screen
 elif st.session_state.screen == "home":
